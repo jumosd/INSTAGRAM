@@ -46,6 +46,8 @@
     <main class="containner main">
         <!-- 왼쪽영역 -->
         <section class="main_left_side">
+            
+            {% for feed in feeds%}
             <!-- 피드카드 시작 -->
             <div class="feed_card">
                 <div class="user_info">
@@ -53,11 +55,11 @@
 
                         <div class="profile_box">
                             <div class="profile_box_image">
-                                <img src="{% static 'profile.jpg' %}" alt=""
+                                <img src="{{ feed.profile_image }}" alt=""
                                     style="object-fit:cover; width: inherit; height: inherit;">
                             </div>
                             <div class="profile_box_userid">
-                                <div style="font-weight: bold;">jumosd</div>
+                                <div style="font-weight: bold;">{{feed.user_id}}</div>
                                 <div style="color: gray;">hajinsoo</div>
                             </div>
                         </div>
@@ -68,7 +70,7 @@
                     </div>
                 </div>
                 <div class="feed_image">
-                    <img src="" alt="">
+                    <img src="{{ feed.image}}" alt="" style="object-fit: cover;">
                 </div>
 
                 <div class="icons_box mb-2">
@@ -87,8 +89,10 @@
                     댓글들
 
                     <div style="border-top: 1px solid black; text-align: left;">
-                        <div>{ㅇㅇㅇ}님 외 {100}명이 좋아합니다.</div>
-                        <div>글내용글내용글내용글내용글내용글내용글내용</div>
+                        <div>{ㅇㅇㅇ}님 외 {{feed.like_count}}명이 좋아합니다.</div>
+
+                        
+                        <div>{{feed.content}}</div>
                         <button>댓글 모두 보기</button>
                         <div>{회원1} 멋집니다</div>
                         <div>{회원2} 멋집니다</div>
@@ -103,6 +107,9 @@
                     </div>
                 </div>
             </div>
+            {% endfor %}
+
+            
         </section>
         <!-- 오른쪽영역 -->
         <section class="main_right_side">

@@ -3,16 +3,14 @@ body {
 }
 
 .header_menu {
-    position: fixed;
-    width: 100%;
-    top: 0px;
-    height: 38px;
+    margin: auto;
+    width: 1000px;
+    height: 50px;
 }
-
 
 .main {
     width: 1000px;
-    margin: 38px auto;
+    margin: auto;
     height: 2000px;
     text-align: center;
     display: flex;
@@ -20,7 +18,7 @@ body {
 
 .main_left_side {
     width: 600px;
-    height: 2000px;
+    height: auto;
     background-color: white;
     padding: 8px;
 }
