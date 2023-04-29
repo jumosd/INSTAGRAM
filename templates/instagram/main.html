@@ -1,34 +1,181 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="{% static 'reset.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    {#    <link rel="stylesheet" href="{% static 'css/style.css' %}">#}
-    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link
+        href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+    <title>Bootstrap demo</title>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-        <img style="width: 150px;" src="https://fontmeme.com/images/instagram-new-logo.png"></a>
-        <input class="form-control me-2" type="search" placeholder="검색하세요" aria-label="Search">
-        <span class="material-icons-outlined">home</span>
-        <span class="material-icons-outlined">forward_to_inbox</span>
-        <span class="material-icons-outlined">add_box</span>
-        <span class="material-symbols-outlined">explore</span>
-        
-        <span class="material-symbols-outlined">favorite</span>
-    </div>
-</nav>
+
+    <header class="navbar navbar-expand-lg bg-light header_menu">
+        <nav class="container-fluid">
+            <div>
+                <a class="navbar-brand" href="#">
+                    <img style="width: 120px;" src="{% static 'logo.png' %}"></a>
+            </div>
+            <div>
+                <input class="form-control me-2" type="search" placeholder="검색하세요" aria-label="Search"
+                    style="width:400px;">
+            </div>
+            <div>
+                <span class="material-icons-outlined">home</span>
+                <span class="material-icons-outlined">forward_to_inbox</span>
+                <span class="material-icons-outlined">add_box</span>
+                <span class="material-symbols-outlined">explore</span>
+                <span class="material-symbols-outlined">favorite</span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="containner main">
+        <!-- 왼쪽영역 -->
+        <section class="main_left_side">
+            <!-- 피드카드 시작 -->
+            <div class="feed_card">
+                <div class="user_info">
+                    <div class="profile_container">
+
+                        <div class="profile_box">
+                            <div class="profile_box_image">
+                                <img src="{% static 'profile.jpg' %}" alt=""
+                                    style="object-fit:cover; width: inherit; height: inherit;">
+                            </div>
+                            <div class="profile_box_userid">
+                                <div style="font-weight: bold;">jumosd</div>
+                                <div style="color: gray;">hajinsoo</div>
+                            </div>
+                        </div>
+
+                        <div class="material-symbols-outlined">
+                            favorite
+                        </div>
+                    </div>
+                </div>
+                <div class="feed_image">
+                    <img src="" alt="">
+                </div>
+
+                <div class="icons_box mb-2">
+                    <div class="icons_left">
+                        <div class="icons">하트</div>
+                        <div class="icons">댓글</div>
+                        <div class="icons">공유</div>
+                    </div>
+
+                    <div class="icons_right">
+                        <div class="icons">북마크</div>
+                    </div>
+                </div>
+
+                <div class="reply_box" style="border-top: 1px solid black;">
+                    댓글들
+
+                    <div style="border-top: 1px solid black; text-align: left;">
+                        <div>{ㅇㅇㅇ}님 외 {100}명이 좋아합니다.</div>
+                        <div>글내용글내용글내용글내용글내용글내용글내용</div>
+                        <button>댓글 모두 보기</button>
+                        <div>{회원1} 멋집니다</div>
+                        <div>{회원2} 멋집니다</div>
+                        <div>{회원3} 멋집니다</div>
+                    </div>
+                    <div>
+                        {5}분전
+                    </div>
+
+                    <div>
+                        <input class="w-100" type="text" placeholder="댓글입력창">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 오른쪽영역 -->
+        <section class="main_right_side">
+            <div class="profile_box">
+                <div class="profile_box_image_right">
+                    <img src="{% static 'profile.jpg' %}" alt="">
+                </div>
+
+                <div class="profile_box_userid">
+                    <div style="font-weight: bold;">jumosd</div>
+                    <div style="color: gray;">hajinsoo</div>
+                </div>
+            </div>
+            <div class="my-3" style="display: flex; justify-content: space-between;">
+                <div style="color: gray;">회원님을위한 추천</div>
+                <div><a href="#" style="text-decoration: none; color: black; font-weight: bold;">모두보기</a></div>
+            </div>
+
+            <div class="profile_box mb-3" style="justify-content: space-between;">
+                <div style="display: flex;">
+                    <div class="profile_box_image_right">
+                        <img src="{% static 'profile.jpg' %}" alt="">
+                    </div>
+                    <div class="profile_box_userid">
+                        <div style="font-weight: bold;">jumosd</div>
+                        <div style="color: gray;">jujuju님 외 12명이 팔로우합니다</div>
+                    </div>
+                </div>
+
+                <div>
+                    <a href="#" style="text-decoration: none; color:rgb(38, 92, 239); font-weight: bold;">팔로우</a>
+                </div>
+            </div>
+            <div class="profile_box mb-3" style="justify-content: space-between;">
+                <div style="display: flex;">
+                    <div class="profile_box_image_right">
+                        <img src="{% static 'profile.jpg' %}" alt="">
+                    </div>
+                    <div class="profile_box_userid">
+                        <div style="font-weight: bold;">jumosd</div>
+                        <div style="color: gray;">jujuju님 외 12명이 팔로우합니다</div>
+                    </div>
+                </div>
+
+                <div>
+                    <a href="#" style="text-decoration: none; color:rgb(38, 92, 239); font-weight: bold;">팔로우</a>
+                </div>
+            </div>
+            <div class="profile_box mb-3" style="justify-content: space-between;">
+                <div style="display: flex;">
+                    <div class="profile_box_image_right">
+                        <img src="{% static 'profile.jpg' %}" alt="">
+                    </div>
+                    <div class="profile_box_userid">
+                        <div style="font-weight: bold;">jumosd</div>
+                        <div style="color: gray;">jujuju님 외 12명이 팔로우합니다</div>
+                    </div>
+                </div>
+
+                <div>
+                    <a href="#" style="text-decoration: none; color:rgb(38, 92, 239); font-weight: bold;">팔로우</a>
+                </div>
+            </div>
+        </section>
+
+
+
+    </main>
 
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+
 </html>
