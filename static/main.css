@@ -157,5 +157,6 @@ body {
     margin: 20px auto;
     width: 700px;
     height: 500px;
-    background-color: orange;
+    border-style: dashed;
+    border: 2px dashed black;
 }
