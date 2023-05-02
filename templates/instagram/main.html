@@ -180,8 +180,19 @@
     </main>
 
     <div class="modal_overlay" id="modal_add_feed">
-        <div class="modal_window">  
+        <div class="modal_window">
+            <div class="modal_window_head">
+                <div class="icons">&nbsp;</div>
+                <div>새이미지 업로드</div>
+                <div class="icons">닫기</div>
+            </div>
+            
+
+            <div class="img_upload_space">
+                이미지 등록구간
+            </div>
         </div>
+
     </div>
 
 </body>
@@ -195,9 +206,35 @@ $('#nav_bar_add_box').click(function(){
     });
 
     $(document.body).css({
-        overflowY: 'hidden'
+        overflow: 'hidden'
     });
+
+    // $("#modal_add_feed").click(function(){
+    //     $('.modal_overlay').css({
+    //     display: 'none'
+    //     });
+    // });
 });
+
+ $('.img_upload_space')
+ .on("dragover", dragOver)
+ .on("dragleave", dragOver)
+ .on("drop", uploadFiles);
+ 
+ function dragover(e){
+    e.stopPropagation();
+    e.preventDefault();
+ }
+
+ function uploadFiles(e){
+    e.stopPropagation();
+    e.preventDefault();
+}
+
+
+
+
+
 
 </script>
 

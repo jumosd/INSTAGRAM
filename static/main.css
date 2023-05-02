@@ -94,12 +94,13 @@ body {
     text-align: left;
 }
 
-.feed_image {
+.feed_image > img {
     width: 488px;
     height: 488px;
     border: 1px solid black;
     border-radius: 5px;
     margin: 10px auto;
+    object-fit: cover;
 }
 
 .icons_box {
@@ -145,4 +146,16 @@ body {
     height: 600px;
     position: relative;
     padding: 10px;
+}
+
+.modal_window_head{
+    display: flex;
+    justify-content: space-between;
+}
+.img_upload_space{
+    
+    margin: 20px auto;
+    width: 700px;
+    height: 500px;
+    background-color: orange;
 }
