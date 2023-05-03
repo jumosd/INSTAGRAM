@@ -47,7 +47,6 @@
     <main class="containner main">
         <!-- 왼쪽영역 -->
         <section class="main_left_side">
-
             {% for feed in feeds%}
             <!-- 피드카드 시작 -->
             <div class="feed_card">
@@ -179,20 +178,45 @@
 
     </main>
 
-    <div class="modal_overlay" id="modal_add_feed">
+    <div id="first_modal" class="modal_overlay" id="modal_add_feed">
         <div class="modal_window">
             <div class="modal_window_head">
                 <div class="icons">&nbsp;</div>
                 <div>새이미지 업로드</div>
-                <div class="icons">닫기</div>
+                <div class="icons" onclick="modalclose()">닫기</div>
             </div>
-
-
             <div class="img_upload_space">
                 이미지 등록구간
             </div>
         </div>
+    </div>
 
+    <div id="second_modal" class="modal_overlay" id="modal_add_feed">
+        <div class="modal_window">
+            <div class="modal_window_head">
+                <div class="icons">&nbsp;</div>
+                <div>두번째 모달</div>
+                <div class="icons" onclick="modalclose()">닫기</div>
+            </div>
+
+            <div style="display:flex; flex-direction: row;">
+
+                <div class="img_upload_space_half">
+                    이미지
+                </div>
+
+
+                <div class="img_upload_space_half2">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <button>
+                        등록하기
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
     </div>
 
 </body>
@@ -201,19 +225,14 @@
 <!--  -->
 <script>
     $('#nav_bar_add_box').click(function () {
-        $('.modal_overlay').css({
-            display: 'flex'
+        $('#first_modal').css({
+            'display': 'flex'
         });
 
         $(document.body).css({
-            overflow: 'hidden'
+            'overflow': 'hidden'
         });
 
-        // $("#modal_add_feed").click(function(){
-        //     $('.modal_overlay').css({
-        //     display: 'none'
-        //     });
-        // });
     });
 
     $('.img_upload_space')
@@ -244,23 +263,37 @@
         e.stopPropagation();
         e.preventDefault();
 
-        e.dataTransfer = e.originalEvent.dataTransfer;
-        var files = e.target.files || e.dataTransfer.files;
+        $('#first_modal').css({
+            'display': 'none',
+        })
+        $('#second_modal').css({
+            'display': 'flex',
+        })
+
+
+        
         console.log("업로드 완료" + files[0].name);
         if (files.length > 1) {
             alert("하나만 올려주세요");
             return;
         }
 
-        if(files[0].type.match(/image.*/)){
-            $(e.target).css({
-                "background-image" : "url(" + window.URL.createObjectURL(files[0]) + ")",
-                "outline" : "none",
-                "background-size" : "100% 100%"
+        if (files[0].type.match(/image.*/)) {
+            $('.img_upload_space_half').css({
+                "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+                "outline": "none",
+                "background-size": "100%",
+                "background-position": "center",
+                "background-repeat": "no-repeat"
             });
         }
     }
 
+    function modalclose(){
+        $('.modal_overlay').css({
+            "display" : "none"
+        });
+    }
 
 
 
