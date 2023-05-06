@@ -257,7 +257,11 @@
         $.ajax({
             url : "/content/upload",
             data : fd,
-            method : "POST",
+            type : "POST",
+            // 폼데이터를 전송할떄는 기본값으로 정해준다
+            processData: false,
+            contentType: false, 
+            // 폼데이터를 전송할떄는 기본값으로 정해준다
             success : function(data){
                 console.log("성공");
             },
@@ -268,7 +272,7 @@
                 console.log("완료")
             }
 
-        })
+        });
 
     })
 
