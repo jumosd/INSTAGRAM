@@ -130,7 +130,7 @@
             <div class="profile_box mb-3" style="justify-content: space-between;">
                 <div style="display: flex;">
                     <div class="profile_box_image_right">
-                        <img src="{% static 'profile.jpg' %}" alt="">
+                        <img src="{% static 'profile.jpg'%}" alt="">
                     </div>
                     <div class="profile_box_userid">
                         <div style="font-weight: bold;">jumosd</div>
@@ -145,7 +145,7 @@
             <div class="profile_box mb-3" style="justify-content: space-between;">
                 <div style="display: flex;">
                     <div class="profile_box_image_right">
-                        <img src="{% static 'profile.jpg' %}" alt="">
+                        <img src="{% static 'profile.jpg'%}" alt="">
                     </div>
                     <div class="profile_box_userid">
                         <div style="font-weight: bold;">jumosd</div>
@@ -160,7 +160,7 @@
             <div class="profile_box mb-3" style="justify-content: space-between;">
                 <div style="display: flex;">
                     <div class="profile_box_image_right">
-                        <img src="{% static 'profile.jpg' %}" alt="">
+                        <img src="{% static 'profile.jpg'%}" alt="">
                     </div>
                     <div class="profile_box_userid">
                         <div style="font-weight: bold;">jumosd</div>
@@ -176,7 +176,7 @@
 
 
 
-    </main>
+    </main> 
 
     <div id="first_modal" class="modal_overlay" id="modal_add_feed">
         <div class="modal_window">
@@ -205,17 +205,16 @@
                     이미지
                 </div>
 
-
                 <div class="img_upload_space_half2">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    <button>
-                        등록하기
-                    </button>
+                    <div >
+                        <textarea id="input_content" class="form-control" id="exampleFormControlTextarea1" ></textarea>
+                        <button id="feed_create_button" class="btn btn-primary w-100 mt-3">
+                            공유하기
+                        </button>
+                    </div >
                 </div>
-
             </div>
         </div>
-
     </div>
     </div>
 
@@ -224,6 +223,9 @@
 
 <!--  -->
 <script>
+    let files
+
+
     $('#nav_bar_add_box').click(function () {
         $('#first_modal').css({
             'display': 'flex'
@@ -234,6 +236,41 @@
         });
 
     });
+
+    $('#feed_create_button').click(function(){
+        let file = files
+        let image = files[0].name;
+        let content = $('#input_content').val();
+        let user_id = 'jumosd';
+        let profile_image = "{{feed.profile_image}}";
+        
+        alert("공유하기눌렀다" + content + file +image + profile_image);
+
+        let fd = new FormData();
+
+        fd.append('file', file);
+        fd.append('image', image);
+        fd.append('content', content);
+        fd.append('user_id', user_id);
+        fd.append('profile_image', profile_image);
+
+        $.ajax({
+            url : "/content/upload",
+            data : fd,
+            method : "POST",
+            success : function(data){
+                console.log("성공");
+            },
+            error : function(request, status, error){
+                console.log("에러 ")
+            },
+            compile: function(){
+                console.log("완료")
+            }
+
+        })
+
+    })
 
     $('.img_upload_space')
         .on("dragover", dragOver)
@@ -263,6 +300,9 @@
         e.stopPropagation();
         e.preventDefault();
 
+        e.dataTransfer = e.originalEvent.dataTransfer;
+        files = e.target.files || e.dataTransfer.files;
+
         $('#first_modal').css({
             'display': 'none',
         })
@@ -270,8 +310,6 @@
             'display': 'flex',
         })
 
-
-        
         console.log("업로드 완료" + files[0].name);
         if (files.length > 1) {
             alert("하나만 올려주세요");
@@ -289,9 +327,9 @@
         }
     }
 
-    function modalclose(){
+    function modalclose() {
         $('.modal_overlay').css({
-            "display" : "none"
+            "display": "none"
         });
     }
 

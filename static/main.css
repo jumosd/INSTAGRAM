@@ -171,8 +171,12 @@ body {
     width: 350px;
     height: 500px;
 }
-.img_upload_space_half2 > textarea{
+.img_upload_space_half2 > div{
     width: 100%;
     height: 100%;
+}
+.img_upload_space_half2 >div > textarea{
+    width: 100%;
+    height: 430px;
 }
 
