@@ -22,5 +22,6 @@ class UploadFeed(APIView):
         user_id = request.data.get("user_id")
         profile_image = request.data.get("profile_image")
         
+        
 
         return Response(status=200)
