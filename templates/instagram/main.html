@@ -225,6 +225,12 @@
 <script>
     let files
 
+    function modalclose() {
+        $('.modal_overlay').css({
+            "display": "none"
+        });
+    }
+
 
     $('#nav_bar_add_box').click(function () {
         $('#first_modal').css({
@@ -238,13 +244,11 @@
     });
 
     $('#feed_create_button').click(function(){
-        let file = files
+        let file = files[0]
         let image = files[0].name;
         let content = $('#input_content').val();
         let user_id = 'jumosd';
         let profile_image = "{{feed.profile_image}}";
-        
-        alert("공유하기눌렀다" + content + file +image + profile_image);
 
         let fd = new FormData();
 
@@ -267,9 +271,11 @@
             },
             error : function(request, status, error){
                 console.log("에러 ")
+                console.log(fd)
             },
             complete: function(){
                 console.log("완료")
+                modalclose()
             }
 
         });
@@ -331,11 +337,7 @@
         }
     }
 
-    function modalclose() {
-        $('.modal_overlay').css({
-            "display": "none"
-        });
-    }
+
 
 
 

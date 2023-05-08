@@ -10,3 +10,4 @@ class Sub(APIView):
     def post(self,request):
         print("포스트호출")
         return render(request,"instagram/main.html")
+
