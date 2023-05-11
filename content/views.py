@@ -15,19 +15,20 @@ class Main(APIView):
         }
         return render(request, "instagram/main.html",context=context)
     
-
-
 class UploadFeed(APIView):
     def post(self, request):
-        file = request.FILES('file')
+        file = request.FILES['file']
+         
         uuid_name = uuid4().hex
         save_path = os.path.join(MEDIA_ROOT,uuid_name)
+        with open(save_path, 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)
 
-
-        image = request.data.get("image")
+        image = uuid_name
         content = request.data.get("content")
         user_id = request.data.get("user_id")
         profile_image = request.data.get("profile_image")
-        Feed.objects.create(content = content, image = image, file= file ,user_id = user_id, profile_image= profile_image, like_count = 0)
+        Feed.objects.create(content = content, image = image ,user_id = user_id, profile_image= profile_image, like_count = 0)
 
         return Response(status=200)
