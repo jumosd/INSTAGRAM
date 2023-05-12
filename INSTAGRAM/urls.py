@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from .views import Sub
 from content.views import Main, UploadFeed
 from django.conf.urls.static import static
@@ -25,7 +25,8 @@ from INSTAGRAM import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('main/', Main.as_view(), name='home'),
-    path('content/upload', UploadFeed.as_view(), name='feed'),
+    path('content/',include('content.urls')),
+    path('user/',include('user.urls')),
 
 ]
 urlpatterns += static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)

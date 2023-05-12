@@ -180,3 +180,26 @@ body {
     height: 430px;
 }
 
+.account{
+    text-align: center;
+    background-color: white;
+    border: 1px solid gray;
+    width: 350px;
+    margin: auto;
+    border-radius: 5px;
+    padding: 1em;
+}
+
+.account_logo{
+    width: 200px;
+}
+
+.account_font{
+    size: 3em;
+    color: darkgray;
+    font-weight: 700;
+
+}
+
+
+
