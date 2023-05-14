@@ -1,7 +1,9 @@
 body {
     background-color: rgb(232, 232, 232);
 }
-
+.error{
+    border: 1px solid red;
+}
 .header_menu {
     margin: auto;
     width: 1000px;
@@ -11,7 +13,6 @@ body {
 .main {
     width: 1000px;
     margin: auto;
-    height: 2000px;
     text-align: center;
     display: flex;
 }

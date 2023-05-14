@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from rest_framework.views import APIView
+from rest_framework.views import APIView,Response
 from django.urls import reverse
 from .models import User
 from django.contrib.auth.hashers import make_password
@@ -20,16 +20,24 @@ class Join(APIView):
         if password1 == password2:
             password = make_password(password1)
             User.objects.create(email=email, name=name, nickname=nickname, password=password)
-            return redirect('user:login')
-        else:
-            pass
-
-
+            return Response(status=200)
+        
 class Login(APIView):
     def get(self,request):
         return render(request, "user/login.html")
     
     def post(self,request):
         #로그인 기능
-        #리다이렉트 메인페이지
-        return render(request, "user/login.html")
+        email =  request.data.get('email',None)
+        password =  request.data.get('password',None)
+
+        user = User.objects.filter(email=email).first()
+        
+        if user is None:
+            return Response(status=400,data=dict(massage="로그인 정보가 잘못되었습니다."))
+
+        if user.check_password(password):
+            #로그인을 했다 세션 or 쿠키
+            return Response(status=200)
+        else:
+            return Response(status=400,data=dict(massage="로그인 정보가 잘못되었습니다."))
