@@ -16,13 +16,11 @@
 </head>
 
 <body>
-
     <div class="account mt-4 input_group">
         <div class="mx-2 mt-2">
             <img class="account_logo" src="{% static 'logo.png' %}" alt="">
         </div>
         <div class="account_font my-3">친구들의 사진과 동영상을 보려면 가입하세요</div>
-
         <div class="form-floating mb-3">
             <input style="height: 35px;" type="email" class="form-control" id="input_email"
                 placeholder="name@example.com">
@@ -33,16 +31,9 @@
                 placeholder="name@example.com">
             <label style="font-size:0.8em; padding: 7px 15px;" for="input_password">비밀번호 입력</label>
         </div>
-
-
         <button id="login_btn" class="btn btn-primary w-100 mt-2">로그인</button>
     </div>
-
     <div class="account mt-2">계정이 없으신가요 ? <a href="{% url 'user:join' %}">회원가입</a></div>
-
-
-
-
 </body>
 
 

@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from INSTAGRAM.settings import MEDIA_ROOT
+from user.models import User
 from .models import Feed
 from uuid import uuid4
 
@@ -10,11 +11,20 @@ class Main(APIView):
     def get(self,request):
         feed_list = Feed.objects.all().order_by('-id') # 장고의 쿼리셋임  select * from content_feed;  와 같은동작을함
         
-        print(request.session['email'])
+        email = request.session.get('email',None)
+        user = User.objects.filter(email=email).first()
         context ={
-            "feeds": feed_list
-        }
-        return render(request, "instagram/main.html",context=context)
+                    "feeds": feed_list,
+                    "user": user
+                }
+
+        if email is None:
+            return render(request, "user/login.html")
+
+        if user is None:
+            return render(request, "user/login.html")
+            
+        return render(request, "instagram/main.html",context=context,)
     
 class UploadFeed(APIView):
     def post(self, request):

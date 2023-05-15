@@ -34,12 +34,21 @@
                 <input class="form-control me-2" type="search" placeholder="검색하세요" aria-label="Search"
                     style="width:400px;">
             </div>
-            <div>
+            <div style="display: flex;">
                 <span class="material-icons-outlined">home</span>
-                <span class="material-icons-outlined">forward_to_inbox</span>
                 <span class="material-icons-outlined" id="nav_bar_add_box">add_box</span>
-                <span class="material-symbols-outlined">explore</span>
                 <span class="material-symbols-outlined">favorite</span>
+
+                <div class="dropdown">
+                    <img style="width: 24px; height:24px;" src="{% static 'profile.jpg' %}" alt=""
+                        class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/user/profile">프로필 설정</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/user/logout" id="logout">로그아웃</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
@@ -52,7 +61,6 @@
             <div class="feed_card">
                 <div class="user_info">
                     <div class="profile_container">
-
                         <div class="profile_box">
                             <div class="profile_box_image">
                                 <img id="input_profile_image" src="{% static 'user1.jpeg'%}" alt="프로필이미지"
@@ -61,7 +69,7 @@
 
                             <div class="profile_box_userid">
                                 <div style="font-weight: bold;">{{feed.user_id}}</div>
-                                <div style="color: gray;">hajinsoo</div>
+                                <div style="color: gray;">{{feed.user.name}}</div>
                             </div>
                         </div>
 
@@ -76,13 +84,22 @@
 
                 <div class="icons_box mb-2">
                     <div class="icons_left">
-                        <div class="icons">하트</div>
-                        <div class="icons">댓글</div>
-                        <div class="icons">공유</div>
+
+                        <div class="icons" id="like_btn" >
+                            <img src="{% static 'heart1.png' %}" alt="" style="width: 100%; object-fit:cover;">
+                        </div>
+                        <div class="icons" id="reply_btn">
+                            <img src="{% static 'reply.png' %}" alt="" style="width: 100%; object-fit:cover;">
+                        </div>
+                        <div class="icons" id="share_btn">
+                            <img src="{% static 'share.png' %}" alt="" style="width: 100%; object-fit:cover;">
+                        </div>
                     </div>
 
                     <div class="icons_right">
-                        <div class="icons">북마크</div>
+                        <div class="icons" id="bookmark_btn">
+                            <img src="{% static 'bookmark.png' %}" alt="" style="width: 100%; object-fit:cover;">
+                        </div>
                     </div>
                 </div>
 
@@ -119,8 +136,8 @@
                 </div>
 
                 <div class="profile_box_userid">
-                    <div style="font-weight: bold;">jumosd</div>
-                    <div style="color: gray;">hajinsoo</div>
+                    <div style="font-weight: bold;">{{user.nickname}}</div>
+                    <div style="color: gray;">{{user.name}}</div>
                 </div>
             </div>
             <div class="my-3" style="display: flex; justify-content: space-between;">
@@ -154,6 +171,7 @@
                     </div>
                 </div>
 
+
                 <div>
                     <a href="#" style="text-decoration: none; color:rgb(38, 92, 239); font-weight: bold;">팔로우</a>
                 </div>
@@ -168,7 +186,6 @@
                         <div style="color: gray;">jujuju님 외 12명이 팔로우합니다</div>
                     </div>
                 </div>
-
                 <div>
                     <a href="#" style="text-decoration: none; color:rgb(38, 92, 239); font-weight: bold;">팔로우</a>
                 </div>
@@ -231,8 +248,9 @@
             "display": "none"
         });
     }
-
-
+    $('#logout').click(function(){
+        location.replace('/main')
+    })
     $('#nav_bar_add_box').click(function () {
         $('#first_modal').css({
             'display': 'flex'
@@ -241,7 +259,6 @@
         $(document.body).css({
             'overflow': 'hidden'
         });
-
     });
 
     $('#feed_create_button').click(function () {
@@ -279,11 +296,7 @@
                 modalclose()
                 location.reload();
             }
-
         });
-
-
-
     })
 
     $('.img_upload_space')
@@ -341,6 +354,18 @@
         }
     }
 
+    $('#like_btn').click(function(){
+        alert("좋아요!")
+    });
+    $('#reply_btn').click(function(){
+        alert("댓글!")
+    });
+    $('#share_btn').click(function(){
+        alert("공유!")
+    });
+    $('#bookmark_btn').click(function(){
+        alert("북마크!")
+    });
 
 
 
