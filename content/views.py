@@ -9,8 +9,21 @@ from uuid import uuid4
 
 class Main(APIView):
     def get(self,request):
-        feed_list = Feed.objects.all().order_by('-id') # 장고의 쿼리셋임  select * from content_feed;  와 같은동작을함
+        feed_object_list = Feed.objects.all().order_by('-id') # 장고의 쿼리셋임  select * from content_feed;  와 같은동작을함
         
+        feed_list = []
+
+        for feed in feed_object_list:
+            user = User.objects.filter(email=feed.user_email).first()
+            feed_list.append({'content':feed.content,
+                              'image':feed.image,
+                              'profile_image':user.profile_image,
+                              'user_nickname':user.nickname,
+                              'like_count':feed.like_count,
+                              'user_email':user.email,
+                              }
+                             )
+
         email = request.session.get('email',None)
         user = User.objects.filter(email=email).first()
         
@@ -41,6 +54,7 @@ class UploadFeed(APIView):
         content = request.data.get("content")
         user_nickname = request.data.get("user_nickname")
         profile_image = request.data.get("profile_image")
-        Feed.objects.create(content = content, image = image ,user_nickname = user_nickname, profile_image= profile_image, like_count = 0)
+        user_email = request.data.get("user_email")
+        Feed.objects.create(content = content, image = image ,user_nickname = user_nickname, profile_image= profile_image, like_count = 0, user_email=user_email)
 
         return Response(status=200)

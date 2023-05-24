@@ -267,6 +267,7 @@
         let content = $('#input_content').val();
         let user_nickname = '{{user.nickname}}';
         let profile_image = '{{user.profile_image}}';
+        let user_email = '{{user.email}}'
 
         let fd = new FormData();
 
@@ -275,7 +276,8 @@
         fd.append('content', content);
         fd.append('user_nickname', user_nickname);
         fd.append('profile_image', profile_image);
-
+        fd.append('user_email', user_email);
+        
         $.ajax({
             url: "/content/upload/",
             data: fd,
