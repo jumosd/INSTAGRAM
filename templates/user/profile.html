@@ -40,12 +40,14 @@
                 <span class="material-symbols-outlined">favorite</span>
 
                 <div class="dropdown">
-                    <img style="width: 24px; height:24px;" src="{% static 'profile.jpg' %}" alt=""
+                    <img style="width: 24px; height:24px;" src="{% get_media_prefix %}{{user.profile_image}}" alt=""
                         class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/user/profile">프로필 설정</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item" href="/user/logout" id="logout">로그아웃</a></li>
                     </ul>
                 </div>
@@ -55,20 +57,25 @@
 
     <main class="containner main">
 
-        <div>
-            <div>
-                프로필사진
+        <div style="display: flex; align-items: center; margin: 1em auto; justify-content: center;">
+            <div style="width: 150px; height: 150px; border-radius: 9999px; overflow: hidden;  ">
+                <img src="{% get_media_prefix %}{{user.profile_image}}" alt="" style="width:100%; height:100%; object-fit:cover">
             </div>
-            <div>
 
-                <div>
-                    <div>{{user.nickname}}</div>
-                    <button>프로필사진편집</button>
+            <div style="margin-left: 25px; width: auto; text-align: left;">
+                <div class="mt-2" style="display: flex; justify-content: space-between;">
+                    <div style="font-weight: 700; font-size: 25px;">{{user.nickname}}</div>
+                    
+                    
+                    <button id="button_profile_upload" class="btn btn-primary" onclick="">프로필 사진변경</button>
+                    <input type="file" id="input_fileupload" style="display: none;" onchange="profile_upload()">
+
+                    <div></div>
                 </div>
-                <div>
+                <div class="mt-2">
                     게시물 50 팔로워 100 팔로우 174
                 </div>
-                <div>
+                <div class="mt-2" style=" font-size: 20px;">
                     {{user.name}}
                 </div>
 
@@ -116,14 +123,56 @@
             </div>
         </div>
     </div>
-    </div>
 
 </body>
 
 
+<script>
+    $('#button_profile_upload').click(function(){
+        $("#input_fileupload").click();
+    });
+
+    function profile_upload(){
+        let file = $('#input_fileupload')[0].files[0];
+        let email = "{{ user.email }}" ;
+
+
+        let fd = new FormData;
+
+        fd.append('file',file);
+        fd.append('email',email);
+
+    
+        $.ajax({
+            url: "/user/profile/",
+            data: fd,
+            method: "POST",
+            // 폼데이터를 전송할떄는 기본값으로 정해준다
+            processData: false,
+            contentType: false,
+            // 폼데이터를 전송할떄는 기본값으로 정해준다
+            success: function (data) {
+                console.log("성공");
+            },
+            error: function (request, status, error) {
+                console.log("에러 ")
+                console.log(fd)
+            },
+            complete: function () {
+                console.log("완료")
+                location.replace("/user/profile")
+            }
+        }); 
+
+
+
+    };
+
+    
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-    crossorigin="anonymous"></script>
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
 
 </html>

@@ -40,7 +40,7 @@
                 <span class="material-symbols-outlined">favorite</span>
 
                 <div class="dropdown">
-                    <img style="width: 24px; height:24px;" src="{% static 'profile.jpg' %}" alt=""
+                    <img style="width: 24px; height:24px;" src="{% get_media_prefix %}{{user.profile_image}}" alt=""
                         class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 
                     <ul class="dropdown-menu">
@@ -63,12 +63,12 @@
                     <div class="profile_container">
                         <div class="profile_box">
                             <div class="profile_box_image">
-                                <img id="input_profile_image" src="{% static 'user1.jpeg'%}" alt="프로필이미지"
+                                <img id="input_profile_image" src="{% get_media_prefix %}{{feed.profile_image}}" alt="프로필이미지"
                                     style="object-fit:cover; width: inherit; height: inherit;">
                             </div>
 
                             <div class="profile_box_userid">
-                                <div style="font-weight: bold;">{{feed.user_id}}</div>
+                                <div style="font-weight: bold;">{{feed.user_nickname}}</div>
                                 <div style="color: gray;">{{feed.user.name}}</div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="feed_image">
-                    <img src="{% get_media_prefix %}{{ feed.image}}" alt="" style="object-fit: cover;">
+                    <img src="{% get_media_prefix %}{{feed.image}}" alt="" style="object-fit: cover;">
                 </div>
 
                 <div class="icons_box mb-2">
@@ -132,7 +132,7 @@
         <section class="main_right_side">
             <div class="profile_box">
                 <div class="profile_box_image_right">
-                    <img src="{% static 'profile.jpg' %}" alt="">
+                    <img src="{% get_media_prefix %}{{user.profile_image}}" alt="">
                 </div>
 
                 <div class="profile_box_userid">
@@ -265,19 +265,19 @@
         let file = files[0]
         let image = files[0].name;
         let content = $('#input_content').val();
-        let user_id = 'jumosd';
-        let profile_image = $('#input_profile_image').attr('src');
+        let user_nickname = '{{user.nickname}}';
+        let profile_image = '{{user.profile_image}}';
 
         let fd = new FormData();
 
         fd.append('file', file);
         fd.append('image', image);
         fd.append('content', content);
-        fd.append('user_id', user_id);
+        fd.append('user_nickname', user_nickname);
         fd.append('profile_image', profile_image);
 
         $.ajax({
-            url: "/content/upload",
+            url: "/content/upload/",
             data: fd,
             method: "POST",
             // 폼데이터를 전송할떄는 기본값으로 정해준다

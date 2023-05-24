@@ -1,6 +1,10 @@
+import os
+from uuid import uuid4
 from django.shortcuts import render, redirect
 from rest_framework.views import APIView,Response
 from django.urls import reverse
+
+from INSTAGRAM.settings import MEDIA_ROOT
 from .models import User
 from django.contrib.auth.hashers import make_password
 
@@ -46,8 +50,7 @@ class LogOut(APIView):
     def get(self, request):
         request.session.flush()
         print("로그아웃")
-        
-        
+
         return redirect('home')
     
 class Profile(APIView):
@@ -60,6 +63,21 @@ class Profile(APIView):
         return render(request,'user/profile.html', context=context)
     
 
-    def post(self, request):        
-        email = request.session.get('email')
-        user = User.objects.filter(email=email)
+    def post(self, request):
+        file = request.FILES['file']
+         
+        uuid_name = uuid4().hex
+        save_path = os.path.join(MEDIA_ROOT,uuid_name)
+        
+        with open(save_path, 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)
+
+        profile_image = uuid_name
+        email = request.data.get('email')
+        user = User.objects.filter(email=email).first()
+
+        user.profile_image = profile_image
+        user.save()
+        
+        return Response(status=200)

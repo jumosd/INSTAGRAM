@@ -13,6 +13,7 @@ class Main(APIView):
         
         email = request.session.get('email',None)
         user = User.objects.filter(email=email).first()
+        
         context ={
                     "feeds": feed_list,
                     "user": user
@@ -38,8 +39,8 @@ class UploadFeed(APIView):
 
         image = uuid_name
         content = request.data.get("content")
-        user_id = request.data.get("user_id")
+        user_nickname = request.data.get("user_nickname")
         profile_image = request.data.get("profile_image")
-        Feed.objects.create(content = content, image = image ,user_id = user_id, profile_image= profile_image, like_count = 0)
+        Feed.objects.create(content = content, image = image ,user_nickname = user_nickname, profile_image= profile_image, like_count = 0)
 
         return Response(status=200)
