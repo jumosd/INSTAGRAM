@@ -88,9 +88,11 @@
                         <div class="icons" id="like_btn" >
                             <img src="{% static 'heart1.png' %}" alt="" style="width: 100%; object-fit:cover;">
                         </div>
+
                         <div class="icons" id="reply_btn">
                             <img src="{% static 'reply.png' %}" alt="" style="width: 100%; object-fit:cover;">
                         </div>
+
                         <div class="icons" id="share_btn">
                             <img src="{% static 'share.png' %}" alt="" style="width: 100%; object-fit:cover;">
                         </div>
@@ -110,18 +112,22 @@
                         <div>{ㅇㅇㅇ}님 외 {{feed.like_count}}명이 좋아합니다.</div>
 
 
-                        <div>{{feed.content}}</div>
+                        <div><b>{{feed.user_nickname}}</b> {{feed.content}}</div>
+
                         <button>댓글 모두 보기</button>
-                        <div>{회원1} 멋집니다</div>
-                        <div>{회원2} 멋집니다</div>
-                        <div>{회원3} 멋집니다</div>
+                        
+                        {% for reply in feed.reply_list %}
+                        <div><b>{{reply.nickname}}</b> {{reply.reply_content}}</div>
+                        {% endfor %}
+                
                     </div>
                     <div>
                         {5}분전
                     </div>
 
-                    <div>
-                        <input class="w-100" type="text" placeholder="댓글입력창">
+                    <div style="display: flex;">
+                        <input class=" w-100" type="text" placeholder="댓글입력창">
+                        <div feed_id="{{feed.feed_id}}" class="btn btn-secondary" style="width: 60px;" >게시</div>
                     </div>
                 </div>
             </div>
@@ -368,8 +374,6 @@
     $('#bookmark_btn').click(function(){
         alert("북마크!")
     });
-
-
 
 
 

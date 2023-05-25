@@ -15,12 +15,26 @@ class Main(APIView):
 
         for feed in feed_object_list:
             user = User.objects.filter(email=feed.user_email).first()
-            feed_list.append({'content':feed.content,
+
+            reply_objects_list = Reply.objects.filter(feed_id=feed.id)
+            reply_list = []
+            for reply in reply_objects_list:
+                user = User.objects.filter(email=reply.email).first()
+                reply_list.append({
+                    'reply_content' : reply.reply_content,
+                    'nickname' : user.nickname,
+
+                })
+
+            feed_list.append({
+                              'feed_id': feed.id,
+                              'content':feed.content,
                               'image':feed.image,
                               'profile_image':user.profile_image,
                               'user_nickname':user.nickname,
                               'like_count':feed.like_count,
                               'user_email':user.email,
+                              'reply_list':reply_list 
                               }
                              )
 
@@ -49,7 +63,7 @@ class UploadFeed(APIView):
         with open(save_path, 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
-
+        email = request.session.get('email')
         image = uuid_name
         content = request.data.get("content")
         user_nickname = request.data.get("user_nickname")
@@ -64,11 +78,12 @@ class Uploadreply(APIView):
         feed_id = request.session.get('feed_id',None)
         reply_content = request.data.get('reply_content',None)
         email = request.session.get('email',None)
+        user = User.objects.filter(email=email).first()
 
+        
         Reply.objects.created(
             feed_id = feed_id,
             reply_content = reply_content,
             email = email
         )
         return Response(status=200)
-        
