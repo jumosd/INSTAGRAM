@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from INSTAGRAM.settings import MEDIA_ROOT
 from user.models import User
-from .models import Feed
+from .models import Feed, Reply, Like ,Bookmark
 from uuid import uuid4
 
 class Main(APIView):
@@ -58,3 +58,17 @@ class UploadFeed(APIView):
         Feed.objects.create(content = content, image = image ,user_nickname = user_nickname, profile_image= profile_image, like_count = 0, user_email=user_email)
 
         return Response(status=200)
+    
+class Uploadreply(APIView):
+    def post(self,request):
+        feed_id = request.session.get('feed_id',None)
+        reply_content = request.data.get('reply_content',None)
+        email = request.session.get('email',None)
+
+        Reply.objects.created(
+            feed_id = feed_id,
+            reply_content = reply_content,
+            email = email
+        )
+        return Response(status=200)
+        
