@@ -126,8 +126,8 @@
                     </div>
 
                     <div style="display: flex;">
-                        <input class=" w-100" type="text" placeholder="댓글입력창">
-                        <div feed_id="{{feed.feed_id}}" class="btn btn-secondary" style="width: 60px;" >게시</div>
+                        <input id="reply_{{feed.feed_id}}" class=" w-100" type="text" placeholder="댓글입력창">
+                        <div feed_id="{{feed.feed_id}}" class="btn btn-secondary upload_reply" style="width: 60px;" >게시</div>
                     </div>
                 </div>
             </div>
@@ -247,6 +247,15 @@
 
 <!--  -->
 <script>
+
+    $('.upload_reply').click(function(e){
+        feed_id = e.target.getAttribute('feed_id')
+        reply_id = 'reply_'+feed_id
+
+        console.log(feed_id,reply_id)
+    })
+
+
     let files
 
     function modalclose() {
