@@ -75,15 +75,18 @@ class UploadFeed(APIView):
     
 class Uploadreply(APIView):
     def post(self,request):
-        feed_id = request.session.get('feed_id',None)
+
+        feed_id = request.data.get('feed_id',None)
+        print(feed_id)
         reply_content = request.data.get('reply_content',None)
         email = request.session.get('email',None)
-        user = User.objects.filter(email=email).first()
+        
 
         
-        Reply.objects.created(
+        Reply.objects.create(
             feed_id = feed_id,
             reply_content = reply_content,
             email = email
         )
+
         return Response(status=200)
