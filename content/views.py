@@ -9,6 +9,11 @@ from uuid import uuid4
 
 class Main(APIView):
     def get(self,request):
+        email = request.session.get('email',None)
+        
+        
+        
+        
         feed_object_list = Feed.objects.all().order_by('-id') # 장고의 쿼리셋임  select * from content_feed;  와 같은동작을함
         
         feed_list = []
@@ -25,22 +30,24 @@ class Main(APIView):
                     'nickname' : user.nickname,
 
                 })
-
+            like_count = Like.objects.filter(feed_id =feed.id, is_like = True).count()
+            is_liked = Like.objects.filter(feed_id = feed.id, email = email , is_like = True).exists()
+            print(is_liked)
             feed_list.append({
                               'feed_id': feed.id,
                               'content':feed.content,
                               'image':feed.image,
                               'profile_image':user.profile_image,
                               'user_nickname':user.nickname,
-                              'like_count':feed.like_count,
+                              'like_count':like_count,
                               'user_email':user.email,
-                              'reply_list':reply_list 
+                              'reply_list':reply_list,
+                              'is_liked' : is_liked
                               }
                              )
 
-        email = request.session.get('email',None)
+
         user = User.objects.filter(email=email).first()
-        
         context ={
                     "feeds": feed_list,
                     "user": user
@@ -51,7 +58,6 @@ class Main(APIView):
 
         if user is None:
             return render(request, "user/login.html")
-            
         return render(request, "instagram/main.html",context=context,)
     
 class UploadFeed(APIView):
@@ -80,8 +86,8 @@ class Uploadreply(APIView):
         print(feed_id)
         reply_content = request.data.get('reply_content',None)
         email = request.session.get('email',None)
+        user = User.objects.filter(email=email).first()
         
-
         
         Reply.objects.create(
             feed_id = feed_id,
@@ -90,3 +96,34 @@ class Uploadreply(APIView):
         )
 
         return Response(status=200)
+
+
+class ToggleLike(APIView):
+    def post(self,request):
+        email = request.session.get('email',None)
+        feed_id = request.data.get('feed_id',None)
+        is_like = request.data.get('is_like')
+        # user = Like.objects.filter(email=email).first()
+        # print("user")
+        if is_like == 'true' or is_like =='True':
+            is_like = False
+            update = Like.objects.get(feed_id=feed_id)
+            update.is_like = is_like
+            update.save()
+            
+        else: 
+            if user == None:
+                Like.objects.create(
+                    email = email,
+                    feed_id = feed_id,
+                    is_like = True
+                )
+            else:
+                is_like = True
+                update = Like.objects.get(feed_id=feed_id)
+                update.is_like = is_like
+                update.save()
+
+        
+        return Response(status = 200)
+

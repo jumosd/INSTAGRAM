@@ -84,15 +84,21 @@
 
                 <div class="icons_box mb-2">
                     <div class="icons_left">
-
-                        <div class="icons" id="like_btn" >
-                            <img src="{% static 'heart1.png' %}" alt="" style="width: 100%; object-fit:cover;">
+                        
+                        {% if not feed.is_liked %}
+                        <div class="icons like_btn" id="like_btn1"  >
+                            <img src="{% static 'heart1.png' %}" alt="" feed_id="{{feed.feed_id}}" is_like="false" style="width: 100%; object-fit:cover;">
                         </div>
-
+                        {% else %}
+                        <div class="icons like_btn" id="like_btn2" >
+                            <img src="{% static 'heart2.png' %}" alt="" feed_id="{{feed.feed_id}}"is_like="true"  style="width: 100%; object-fit:cover;">
+                        </div>
+                        {% endif %}
+                        
                         <div class="icons" id="reply_btn">
                             <img src="{% static 'reply.png' %}" alt="" style="width: 100%; object-fit:cover;">
                         </div>
-
+                        
                         <div class="icons" id="share_btn">
                             <img src="{% static 'share.png' %}" alt="" style="width: 100%; object-fit:cover;">
                         </div>
@@ -247,6 +253,39 @@
 
 <!--  -->
 <script>
+
+
+
+    $('.like_btn').click(function(e){
+        console.log(e.target)
+            //좋아요를 누른거
+            let feed_id = e.target.getAttribute('feed_id');
+            let is_like = e.target.getAttribute('is_like');
+            $.ajax({
+                method:"POST",
+                url:'/content/like/',
+                data:{
+                    'feed_id': feed_id,
+                    'is_like': is_like
+                },
+                success: function (data) {
+                console.log("성공");
+                location.reload()
+                },
+                error: function (request, status, error) {
+                    console.log("에러 ")
+
+                },
+                complete: function () {
+                    console.log("완료")
+                    
+                    
+                }
+            });
+       
+        }
+    )
+
 
     $('.upload_reply').click(function(e){
         let feed_id = e.target.getAttribute('feed_id');
