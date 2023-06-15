@@ -15,11 +15,12 @@ class Like(models.Model):
     feed_id = models.IntegerField(default=0)
     email = models.EmailField(default='')
     is_like = models.BooleanField(default=True)
+    nickname = models.TextField(default='')
 
 class Reply(models.Model):
     feed_id = models.IntegerField(default=0)
     email = models.EmailField(default='')
-    reply_content = models.TextField()
+    reply_content = models.TextField(null=True)
 
 class Bookmark(models.Model):
     feed_id = models.IntegerField(default=0)

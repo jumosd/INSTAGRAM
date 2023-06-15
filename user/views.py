@@ -5,7 +5,9 @@ from rest_framework.views import APIView,Response
 from django.urls import reverse
 
 from INSTAGRAM.settings import MEDIA_ROOT
+from content.models import Feed,Like,Bookmark
 from .models import User
+
 from django.contrib.auth.hashers import make_password
 
 # Create your views here.
@@ -57,8 +59,15 @@ class Profile(APIView):
     def get(self, request):
         email = request.session.get('email')
         user = User.objects.filter(email=email).first()
+        wrote_feed = Feed.objects.filter(user_nickname= user.nickname)
+        
+        # did_bookmark = Bookmark.objects.filter(email= email)
+        
+        
+
         context={
-            'user': user
+            'user': user,
+            'wrote_feed_count' : len(wrote_feed)
         }
         return render(request,'user/profile.html', context=context)
     

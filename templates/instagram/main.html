@@ -73,8 +73,8 @@
                             </div>
                         </div>
 
-                        <div class="material-symbols-outlined">
-                            favorite
+                        <div class="icons" id="follower">
+                            <img src="{% static 'user_plus.png' %}" alt="" style="width: 100%; object-fit:cover;">
                         </div>
                     </div>
                 </div>
@@ -117,14 +117,17 @@
                     </div>
                 </div>
 
+
                 <div class="reply_box" style="border-top: 1px solid black;">
                     댓글들
 
                     <div style="border-top: 1px solid black; text-align: left;">
-                        <div>{ㅇㅇㅇ}님 외 {{feed.like_count}}명이 좋아합니다.</div>
 
+                        {% if feed.like_count %}
+                        <div><b>{{feed.like_name|join:", "}}</b> 님 외 {{feed.like_count}}명이 좋아합니다.</div>
+                        {% endif %}
 
-                        <div><b>{{feed.user_nickname}}</b> {{feed.content}}</div>
+                        <div class="mt-2"><b>{{feed.user_nickname}}</b> {{feed.content}}</div>
 
                         <button>댓글 모두 보기</button>
                         

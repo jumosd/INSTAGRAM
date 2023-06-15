@@ -32,7 +32,33 @@ class Main(APIView):
             is_liked = Like.objects.filter(feed_id = feed.id, email = email , is_like = True).exists()
             is_bookmarked = Bookmark.objects.filter(feed_id = feed.id, email = email , is_bookmark = True).exists()
 
-            feed_list.append({
+            like_objects = Like.objects.filter(feed_id = feed.id)
+            like_name_list = []
+            
+            for name in like_objects:   
+                like_name_list.append(name.nickname)
+
+            print(like_name_list)    
+                    
+
+            try:
+                # like_name = like_object.nickname
+                # print(like_name)
+                feed_list.append({
+                              'feed_id': feed.id,
+                              'content':feed.content,
+                              'image':feed.image,
+                              'profile_image':user.profile_image,
+                              'user_nickname':user.nickname,
+                              'like_count':like_count,
+                              'user_email':user.email,
+                              'reply_list':reply_list,
+                              'is_liked' : is_liked,
+                              'is_bookmarked' : is_bookmarked,
+                              'like_name' : like_name_list[0:2]
+                              })
+            except :
+                feed_list.append({
                               'feed_id': feed.id,
                               'content':feed.content,
                               'image':feed.image,
@@ -43,10 +69,9 @@ class Main(APIView):
                               'reply_list':reply_list,
                               'is_liked' : is_liked,
                               'is_bookmarked' : is_bookmarked
-                              }
-                             )
+                              })
 
-
+            print('피드1')
         user = User.objects.filter(email=email).first()
         context ={
                     "feeds": feed_list,
@@ -98,18 +123,23 @@ class ToggleLike(APIView):
         email = request.session.get('email',None)
         feed_id = request.data.get('feed_id',None)
         is_like = request.data.get('is_like')
-        user = Like.objects.filter(feed_id=feed_id, email=email).exists()
+
+        is_user = Like.objects.filter(feed_id=feed_id, email=email).exists()
+        _user = User.objects.filter(email=email).first()
+        usernickname = _user.nickname
+        print(email)
 
         if is_like == 'true' or is_like =='True':
             is_like = False
             update = Like.objects.get(feed_id=feed_id)
             update.delete()
         else: 
-            if not user:
+            if not is_user:
                 Like.objects.create(
                     email = email,
                     feed_id = feed_id,
-                    is_like = True
+                    is_like = True,
+                    nickname = usernickname
                 )
               
         return Response(status = 200)
