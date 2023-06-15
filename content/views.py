@@ -71,7 +71,6 @@ class Main(APIView):
                               'is_bookmarked' : is_bookmarked
                               })
 
-            print('피드1')
         user = User.objects.filter(email=email).first()
         context ={
                     "feeds": feed_list,
@@ -153,7 +152,7 @@ class ToggleBookmark(APIView):
 
         if is_bookmarked == 'true' or is_bookmarked =='True':
             is_bookmarked = False
-            update = Bookmark.objects.get(feed_id=feed_id)
+            update = Bookmark.objects.get(feed_id=feed_id, email=email)
             update.delete()
         else: 
             if not user:
